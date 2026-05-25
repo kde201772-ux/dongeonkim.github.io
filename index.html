@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dong-eon Kim | Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --text: #1a1916;
+    --muted: #6b6860;
+    --accent: #2a4a7f;
+    --accent-light: #e8edf5;
+    --border: #e2dfd8;
+    --tag-bg: #eef1f7;
+    --tag-text: #2a4a7f;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 56px;
+  }
+  .nav-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted);
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    max-width: 860px; margin: 0 auto;
+    padding: 80px 5% 64px;
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 48px;
+    align-items: start;
+  }
+  .hero-label {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 6vw, 58px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-bio {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 520px;
+    margin-bottom: 28px;
+  }
+  .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+  }
+  .btn-primary:hover { background: #1e3661; }
+  .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+
+  .avatar-box {
+    width: 160px; height: 160px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    color: var(--accent);
+    flex-shrink: 0;
+    letter-spacing: -0.02em;
+    margin-top: 8px;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 860px; margin: 0 auto;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 860px; margin: 0 auto;
+    padding: 56px 5%;
+  }
+  .section-header {
+    display: flex; align-items: baseline; gap: 16px;
+    margin-bottom: 36px;
+  }
+  .section-header h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px; font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .section-count {
+    font-size: 12px; font-weight: 500; color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* RESEARCH */
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .research-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+  .research-card-icon {
+    font-size: 22px; margin-bottom: 12px;
+  }
+  .research-card h3 {
+    font-size: 14px; font-weight: 500; margin-bottom: 8px;
+  }
+  .research-card p {
+    font-size: 13px; color: var(--muted); line-height: 1.65;
+  }
+
+  /* PUBLICATIONS */
+  .pub-filters {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .filter-btn {
+    padding: 5px 14px;
+    font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  .pub-list { display: flex; flex-direction: column; gap: 0; }
+
+  .pub-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .pub-item:first-child { border-top: 1px solid var(--border); }
+
+  .pub-year {
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    padding-top: 2px;
+  }
+  .pub-star {
+    font-size: 11px; color: var(--accent);
+    display: block; margin-top: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .pub-title {
+    font-size: 14px; font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+  .pub-title a {
+    color: inherit; text-decoration: none;
+  }
+  .pub-title a:hover { color: var(--accent); text-decoration: underline; }
+
+  .pub-authors {
+    font-size: 12.5px; color: var(--muted);
+    margin-bottom: 5px;
+    line-height: 1.5;
+  }
+  .pub-authors strong { color: var(--text); font-weight: 500; }
+
+  .pub-meta {
+    font-size: 12px; color: var(--muted);
+    font-style: italic;
+  }
+  .pub-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .pub-tag {
+    font-size: 11px; padding: 2px 8px;
+    background: var(--tag-bg); color: var(--tag-text);
+    border-radius: 100px; font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  /* CV */
+  .cv-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cv-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px; font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .cv-text p { font-size: 14px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .contact-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .contact-item:hover {
+    border-color: var(--accent);
+    box-shadow: 0 2px 12px rgba(42,74,127,0.08);
+  }
+  .contact-icon {
+    width: 36px; height: 36px;
+    background: var(--accent-light);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon svg { width: 16px; height: 16px; stroke: var(--accent); }
+  .contact-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .contact-value { font-size: 13px; font-weight: 500; margin-top: 1px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 5%;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* HIDDEN pub filter */
+  .pub-item[data-hidden="true"] { display: none; }
+
+  @media (max-width: 600px) {
+    .hero { grid-template-columns: 1fr; }
+    .avatar-box { width: 100px; height: 100px; font-size: 32px; }
+    .cv-section { flex-direction: column; }
+    nav { padding: 0 4%; }
+    .nav-links { gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-name">Dong-eon Kim</a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-label">PhD Candidate · Korea University</p>
+    <h1>Dong-eon<br><em>Kim</em></h1>
+    <p class="hero-bio">
+      I study colloidal quantum dot (CQD) optoelectronics, focusing on PbS QD synthesis, surface passivation, and device fabrication for shortwave infrared (SWIR) photodetectors and photovoltaics. Member of <a href="https://neco.korea.ac.kr" style="color:var(--accent);">NECO Lab</a>, Dept. of Chemical &amp; Biomolecular Engineering.
+    </p>
+    <div class="hero-links">
+      <a href="#publications" class="btn btn-primary">Publications</a>
+      <a href="#cv" class="btn btn-ghost">Download CV</a>
+      <a href="#contact" class="btn btn-ghost">Contact</a>
+    </div>
+  </div>
+  <div class="avatar-box">DK</div>
+</div>
+
+<hr class="section-divider">
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-header">
+    <h2>Research</h2>
+    <span class="section-count">Colloidal Quantum Dots</span>
+  </div>
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="research-card-icon">⬡</div>
+      <h3>CQD Synthesis &amp; Passivation</h3>
+      <p>PbS, InAs, and Ag₂Te quantum dot synthesis. Surface ligand exchange strategies for improved carrier transport and stability.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-card-icon">◈</div>
+      <h3>SWIR Photodetectors</h3>
+      <p>High-performance shortwave infrared photodetectors including avalanche photodiodes (APDs) and broadband Vis–SWIR detectors.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-card-icon">◉</div>
+      <h3>Photovoltaics</h3>
+      <p>Solution-processed solar cells leveraging quantum confinement. Thermophotovoltaics and perovskite tandem architectures.</p>
+    </div>
+    <div class="research-card">
+      <div class="research-card-icon">◫</div>
+      <h3>Device Modeling &amp; ML</h3>
+      <p>TCAD optical simulations, Transfer Matrix Method, and Bayesian machine learning for QD synthesis optimization.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-header">
+    <h2>Publications</h2>
+    <span class="section-count" id="pub-count">17 papers</span>
+  </div>
+
+  <div class="pub-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="first">First Author</button>
+    <button class="filter-btn" data-filter="photodetector">Photodetector</button>
+    <button class="filter-btn" data-filter="photovoltaic">Photovoltaic</button>
+    <button class="filter-btn" data-filter="review">Review</button>
+  </div>
+
+  <div class="pub-list" id="pub-list">
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2026</div>
+      </div>
+      <div>
+        <div class="pub-title">Spectral down-shifting colloidal quantum dot solids for enhanced photosynthetic biofuel production</div>
+        <div class="pub-authors">JY Lee, M Yang, D Shin, <strong>D Kim</strong>, SW Baek, SJ Sim</div>
+        <div class="pub-meta">Chemical Engineering Journal, 176993</div>
+        <div class="pub-tags"><span class="pub-tag">CQD</span><span class="pub-tag">Biofuel</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2026</div>
+      </div>
+      <div>
+        <div class="pub-title">Seedless One‐Pot Synthesis of Colloidal InAs Quantum Dots Enabling a High‐Accuracy Photoplethysmography Oximeter</div>
+        <div class="pub-authors">BK Kim, S Jee, Y Ahn, IS Lee, <strong>D Kim</strong>, S Park, Y Jung, IH Bae, SW Baek</div>
+        <div class="pub-meta">Advanced Science, e24375</div>
+        <div class="pub-tags"><span class="pub-tag">InAs QD</span><span class="pub-tag">SWIR</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="first review">
+      <div>
+        <div class="pub-year">2026</div>
+        <span class="pub-star">★ First</span>
+      </div>
+      <div>
+        <div class="pub-title">Recent Advances in Colloidal Quantum Dots‐Based Shortwave Infrared Photodetectors</div>
+        <div class="pub-authors"><strong>D Kim</strong>, MJ Si, J Kim, Y Jung, SW Baek</div>
+        <div class="pub-meta">Advanced Optical Materials 14 (4), e02859</div>
+        <div class="pub-tags"><span class="pub-tag">Review</span><span class="pub-tag">SWIR</span><span class="pub-tag">Photodetector</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">Colloidal Quantum Dot Solid-Based Infrared Optoelectronics Enabled by Solution-Phase Ligand Exchange</div>
+        <div class="pub-authors">MJ Si, <strong>D Kim</strong>, S Jeong, M Yang, J Kim, SY Lee, IS Lee, J Jeong, BC Kim, ...</div>
+        <div class="pub-meta">Korean Journal of Chemical Engineering 41 (13), 3561–3572 · 8 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Ligand Exchange</span><span class="pub-tag">IR</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">Giant Colloidal Quantum Dot/α-Ga₂O₃ Heterojunction for High Performance UV–Vis–IR Broadband Photodetector</div>
+        <div class="pub-authors">D Lee, S Jeong, S Moon, M Yang, SH Kim, <strong>D Kim</strong>, SY Lee, IS Lee, ...</div>
+        <div class="pub-meta">ACS Nano 18 (51), 34741–34749 · 26 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Broadband</span><span class="pub-tag">Heterojunction</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">Silver telluride colloidal quantum dot solid for fast extended shortwave infrared photodetector</div>
+        <div class="pub-authors">Y Ahn, SY Eom, G Kim, JH Lee, B Kim, <strong>D Kim</strong>, MJ Si, M Yang, Y Jung, ...</div>
+        <div class="pub-meta">Advanced Science 11 (44), 2407453 · 36 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Ag₂Te</span><span class="pub-tag">SWIR</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">P‐Type Colloidal InSb Quantum Dot Ink Enables III–V Group Bulk‐Heterojunction Shortwave Infrared (SWIR) Photodetector</div>
+        <div class="pub-authors">S Jee, MJ Si, JH Choi, <strong>D Kim</strong>, C Kim, D Yang, SW Baek</div>
+        <div class="pub-meta">Advanced Optical Materials 12 (18), 2303097 · 44 citations</div>
+        <div class="pub-tags"><span class="pub-tag">InSb</span><span class="pub-tag">BHJ</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">Colloidal InAs Quantum Dot‐Based Infrared Optoelectronics Enabled by Universal Dual‐Ligand Passivation</div>
+        <div class="pub-authors">MJ Si, S Jee, M Yang, <strong>D Kim</strong>, Y Ahn, S Lee, C Kim, IH Bae, SW Baek</div>
+        <div class="pub-meta">Advanced Science 11 (13), 2306798 · 42 citations</div>
+        <div class="pub-tags"><span class="pub-tag">InAs</span><span class="pub-tag">Dual-Ligand</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="first photovoltaic">
+      <div>
+        <div class="pub-year">2024</div>
+        <span class="pub-star">★ First</span>
+      </div>
+      <div>
+        <div class="pub-title">Multi‐Facet Passivation of Ternary Colloidal Quantum Dot Enabled by Quadruple‐Ligand Ensemble toward Efficient Lead‐Free Optoelectronics</div>
+        <div class="pub-authors"><strong>D Kim</strong>, G Cho, YH Kim, JH Kwon, Y Oh, M Yang, S Jee, IS Lee, MJ Si, ...</div>
+        <div class="pub-meta">Advanced Energy Materials 14 (7), 2302579 · 39 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Lead-Free</span><span class="pub-tag">Passivation</span><span class="pub-tag">Ag₂Te</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photovoltaic">
+      <div>
+        <div class="pub-year">2024</div>
+      </div>
+      <div>
+        <div class="pub-title">Thiol‐Free p‐Type Colloidal Quantum Dot for Efficient Broadband Optoelectronics</div>
+        <div class="pub-authors">SH Kim, YH Kim, JH Choi, S Jeong, <strong>D Kim</strong>, M Yang, SY Lee, J Kim, Y Ahn, ...</div>
+        <div class="pub-meta">International Journal of Energy Research 2024, 5525410 · 4 citations</div>
+        <div class="pub-tags"><span class="pub-tag">p-Type</span><span class="pub-tag">Broadband</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2023</div>
+      </div>
+      <div>
+        <div class="pub-title">Sulfurized Colloidal Quantum Dot/Tungsten Disulfide Multi‐Dimensional Heterojunction for an Efficient Self‐Powered Visible‐to‐SWIR Photodetector</div>
+        <div class="pub-authors">SH Kim, D Lee, S Moon, JH Choi, <strong>D Kim</strong>, J Kim, SW Baek</div>
+        <div class="pub-meta">Advanced Functional Materials 33 (43), 2303778 · 55 citations</div>
+        <div class="pub-tags"><span class="pub-tag">WS₂</span><span class="pub-tag">Self-Powered</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photovoltaic">
+      <div>
+        <div class="pub-year">2023</div>
+      </div>
+      <div>
+        <div class="pub-title">Efficient Semi-Transparent Perovskite Quantum Dot Photovoltaics Enabled by Asymmetric Dielectric/Metal/Dielectric Transparent Electrodes</div>
+        <div class="pub-authors">J Kim, <strong>D Kim</strong>, W Kim, S Woo, SW Baek, MJ Ko, Y Kim</div>
+        <div class="pub-meta">Chemical Engineering Journal 469, 143824 · 25 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Perovskite</span><span class="pub-tag">Photovoltaic</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photodetector">
+      <div>
+        <div class="pub-year">2023</div>
+      </div>
+      <div>
+        <div class="pub-title">Surface Tailoring Enables Colloidal Quantum Dot: Metal-Oxide Nanocrystal Hybrid Ink for Broadband Photon Energy Conversion</div>
+        <div class="pub-authors">JH Choi, MJ Si, SH Kim, N Maniyamgama, <strong>D Kim</strong>, S Jee, YH Kim, ...</div>
+        <div class="pub-meta">Applied Surface Science 612, 155804 · 6 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Hybrid Ink</span><span class="pub-tag">Broadband</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photovoltaic">
+      <div>
+        <div class="pub-year">2023</div>
+      </div>
+      <div>
+        <div class="pub-title">Ethylene Glycol-Containing Ammonium Salt for Developing Highly Compatible Interfaces in Perovskite Solar Cells</div>
+        <div class="pub-authors">JH Lee, <strong>D Kim</strong>, H Opoku, H Ahn, JJ Lee, SW Baek, JW Jo</div>
+        <div class="pub-meta">Chemical Engineering Journal 455, 140833 · 18 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Perovskite</span><span class="pub-tag">Interface</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photovoltaic">
+      <div>
+        <div class="pub-year">2023</div>
+      </div>
+      <div>
+        <div class="pub-title">Colloidal Quantum Dot: Organic Ternary Ink for Efficient Solution‐Processed Hybrid Solar Cells</div>
+        <div class="pub-authors">HS Jeong, <strong>D Kim</strong>, S Jee, MJ Si, C Kim, JY Lee, Y Jung, SW Baek</div>
+        <div class="pub-meta">International Journal of Energy Research 2023, 4911750 · 13 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Hybrid Solar Cell</span><span class="pub-tag">Ternary</span></div>
+      </div>
+    </div>
+
+    <div class="pub-item" data-tags="photovoltaic">
+      <div>
+        <div class="pub-year">2022</div>
+      </div>
+      <div>
+        <div class="pub-title">A Small-Molecule-Templated Nanostructure Back Electrode for Enhanced Light Absorption and Photocurrent in Perovskite Quantum Dot Photovoltaics</div>
+        <div class="pub-authors">S Han, J Kim, DE Kim, MJ Ko, J Choi, SW Baek, Y Kim</div>
+        <div class="pub-meta">Journal of Materials Chemistry A 10 (16), 8966–8974 · 11 citations</div>
+        <div class="pub-tags"><span class="pub-tag">Perovskite QD</span><span class="pub-tag">Electrode</span></div>
+      </div>
+    </div>
+
+  </div><!-- /pub-list -->
+</section>
+
+<hr class="section-divider">
+
+<!-- CV -->
+<section id="cv">
+  <div class="section-header">
+    <h2>CV</h2>
+  </div>
+  <div class="cv-section">
+    <div class="cv-text">
+      <h3>Curriculum Vitae</h3>
+      <p>Full academic CV including education, publications, awards, and research experience.</p>
+      <p style="margin-top:6px; font-size:13px; color:var(--muted);">Last updated: 2025 — PDF format</p>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <a href="cv.pdf" class="btn btn-primary" download>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download CV
+      </a>
+      <a href="cv.pdf" class="btn btn-ghost" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View PDF
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-grid">
+    <a href="mailto:dongeon@korea.ac.kr" class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">dongeon@korea.ac.kr</div>
+      </div>
+    </a>
+    <a href="https://scholar.google.com" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">Google Scholar</div>
+        <div class="contact-value">Dong-eon Kim</div>
+      </div>
+    </a>
+    <a href="https://github.com/dongeon-kim" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">dongeon-kim</div>
+      </div>
+    </a>
+    <a href="https://neco.korea.ac.kr" target="_blank" class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">Lab</div>
+        <div class="contact-value">NECO Lab, Korea Univ.</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Dong-eon Kim · Korea University · NECO Lab
+</footer>
+
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const pubItems = document.querySelectorAll('.pub-item');
+  const pubCount = document.getElementById('pub-count');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      pubItems.forEach(item => {
+        const tags = item.dataset.tags || '';
+        if (filter === 'all' || tags.includes(filter)) {
+          item.removeAttribute('data-hidden');
+          visible++;
+        } else {
+          item.setAttribute('data-hidden', 'true');
+        }
+      });
+      pubCount.textContent = visible + ' paper' + (visible !== 1 ? 's' : '');
+    });
+  });
+</script>
+
+</body>
+</html>
