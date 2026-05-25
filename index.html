@@ -59,6 +59,34 @@ nav {
 .nav-links button:hover { color: var(--accent); background: var(--accent-light); }
 .nav-links button.active { color: var(--accent); background: var(--accent-light); }
 
+/* DROPDOWN */
+.nav-dropdown { position: relative; }
+.nav-drop-btn { display: flex; align-items: center; gap: 4px; }
+.drop-arrow { font-size: 10px; opacity: 0.6; transition: transform 0.2s; }
+.nav-dropdown:hover .drop-arrow { transform: rotate(180deg); }
+.dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  list-style: none;
+  min-width: 170px;
+  padding: 6px;
+  z-index: 300;
+}
+.nav-dropdown:hover .dropdown-menu { display: block; }
+.dropdown-menu li button {
+  width: 100%; text-align: left;
+  padding: 8px 12px; border-radius: 5px;
+  font-size: 13px; color: var(--text);
+  text-transform: none; letter-spacing: 0;
+  font-weight: 400;
+}
+.dropdown-menu li button:hover { background: var(--accent-light); color: var(--accent); }
+
 /* ── PAGE WRAPPER ── */
 .pages { padding-top: var(--nav-h); }
 .page { display: none; animation: fadeIn 0.3s ease; }
@@ -275,13 +303,13 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
   padding: 20px 0; border-bottom: 1px solid var(--border);
 }
 .patent-item:first-child, .conf-item:first-child { border-top: 1px solid var(--border); }
-.patent-title { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
-.patent-meta { font-size: 13px; color: var(--muted); }
-.patent-badge {
-  display: inline-block; font-size: 11px; font-weight: 500;
-  padding: 2px 8px; border-radius: 100px;
-  background: var(--tag-bg); color: var(--tag-text); margin-right: 8px;
+
+.profile-info-list { display: flex; flex-direction: column; gap: 10px; }
+.profile-info-row {
+  display: grid; grid-template-columns: 100px 1fr;
+  gap: 12px; font-size: 13.5px; line-height: 1.6;
 }
+.profile-info-label { font-weight: 500; color: var(--muted); }
 
 /* ══════════════════════════════
    PAGE 4 — CONTACT
@@ -341,8 +369,21 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
   <span class="nav-name" onclick="showPage('home')">Dongeon Kim</span>
   <ul class="nav-links">
     <li><button onclick="showPage('home')" id="nav-home" class="active">Home</button></li>
-    <li><button onclick="showPage('about')" id="nav-about">About</button></li>
-    <li><button onclick="showPage('publications')" id="nav-publications">Publications</button></li>
+    <li class="nav-dropdown">
+      <button id="nav-about" class="nav-drop-btn">About <span class="drop-arrow">▾</span></button>
+      <ul class="dropdown-menu">
+        <li><button onclick="showPage('profile')">Profile</button></li>
+        <li><button onclick="showPage('cv')">Curriculum Vitae</button></li>
+        <li><button onclick="showPage('skills')">Research Skills</button></li>
+      </ul>
+    </li>
+    <li class="nav-dropdown">
+      <button id="nav-research" class="nav-drop-btn">Research <span class="drop-arrow">▾</span></button>
+      <ul class="dropdown-menu">
+        <li><button onclick="showPage('publications')">Publications</button></li>
+        <li><button onclick="showPage('patents')">Patents &amp; Talks</button></li>
+      </ul>
+    </li>
     <li><button onclick="showPage('contact')" id="nav-contact">Contact</button></li>
   </ul>
 </nav>
@@ -389,57 +430,56 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
   <div class="footer" style="position:absolute; bottom:0; left:0; right:0; color:rgba(255,255,255,0.4); border-top:1px solid rgba(255,255,255,0.1);">© 2025 Dongeon Kim · Korea University · NECO Lab</div>
 </div>
 
-<!-- ══ PAGE: ABOUT ══ -->
-<div class="page" id="page-about">
+<!-- ══ PAGE: PROFILE ══ -->
+<div class="page" id="page-profile">
   <div class="container">
     <p class="section-label">About</p>
-    <h1 class="page-title">Skills &amp; <em>Background</em></h1>
+    <h1 class="page-title"><em>Profile</em></h1>
 
-    <div class="about-grid">
-      <div class="about-card">
-        <h3>Technical Skills</h3>
-        <ul class="skill-list">
-          <li>PbS / InAs / Ag₂Te CQD synthesis</li>
-          <li>Surface passivation &amp; ligand exchange</li>
-          <li>SWIR photodetector / APD fabrication</li>
-          <li>J-V, EQE, transient characterization</li>
-          <li>MATLAB Transfer Matrix Method</li>
-          <li>Python data analysis pipelines</li>
-          <li>Bayesian ML for process optimization</li>
-          <li>AutoCAD photomask design</li>
-        </ul>
-      </div>
-      <div class="about-card">
-        <h3>Research Interests</h3>
-        <div class="interest-tags">
-          <span class="interest-tag">Colloidal Quantum Dots</span>
-          <span class="interest-tag">SWIR Optoelectronics</span>
-          <span class="interest-tag">Photodetectors</span>
-          <span class="interest-tag">Avalanche Photodiodes</span>
-          <span class="interest-tag">Lead-Free QDs</span>
-          <span class="interest-tag">Photovoltaics</span>
-          <span class="interest-tag">Surface Passivation</span>
-          <span class="interest-tag">Machine Learning</span>
-          <span class="interest-tag">Ligand Engineering</span>
+    <!-- Top: photo + info -->
+    <div style="display:grid; grid-template-columns:160px 1fr; gap:32px; align-items:start; margin-bottom:48px;">
+      <img src="profile.jpg" alt="Dongeon Kim"
+        style="width:160px; height:200px; object-fit:cover; object-position:center top; border-radius:10px; border:1px solid var(--border);">
+      <div>
+        <div style="font-family:'DM Serif Display',serif; font-size:26px; margin-bottom:4px;">Dongeon Kim</div>
+        <div style="font-size:14px; color:var(--accent); font-weight:500; margin-bottom:14px;">PhD Candidate · Expected graduation: February 2027</div>
+        <div class="profile-info-list">
+          <div class="profile-info-row">
+            <span class="profile-info-label">Department</span>
+            <span>Department of Chemical and Biological Engineering, Korea University, Seoul, Korea</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Laboratory</span>
+            <span>Nanomaterials Energy Conversion Optoelectronics Lab (NECO)</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Advisor</span>
+            <span>Prof. Se-Woong Baek</span>
+          </div>
+          <div class="profile-info-row">
+            <span class="profile-info-label">Email</span>
+            <span><a href="mailto:kdu918@korea.ac.kr" style="color:var(--accent);">kdu918@korea.ac.kr</a></span>
+          </div>
         </div>
       </div>
     </div>
 
     <hr class="divider">
 
-    <p class="section-label" style="margin-bottom:24px;">Education</p>
-    <div class="edu-list">
+    <!-- Education -->
+    <p class="section-label" style="margin-bottom:20px;">Education</p>
+    <div class="edu-list" style="margin-bottom:48px;">
       <div class="edu-item">
         <div class="edu-year">2022 –<br>2027</div>
         <div>
-          <div class="edu-degree">Ph.D. in Chemical &amp; Biomolecular Engineering</div>
-          <div class="edu-school">Korea University · NECO Lab (Prof. Baek Se-woong)</div>
+          <div class="edu-degree">Ph.D. in Chemical &amp; Biological Engineering</div>
+          <div class="edu-school">Korea University · NECO Lab (Advisor: Prof. Se-Woong Baek)</div>
         </div>
       </div>
       <div class="edu-item">
-        <div class="edu-year">– 2022</div>
+        <div class="edu-year">2018 –<br>2022</div>
         <div>
-          <div class="edu-degree">B.S. in Chemical &amp; Biomolecular Engineering</div>
+          <div class="edu-degree">B.S. in Chemical &amp; Biological Engineering</div>
           <div class="edu-school">Korea University</div>
         </div>
       </div>
@@ -447,18 +487,63 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
 
     <hr class="divider">
 
-    <div class="cv-block">
-      <div>
-        <h3>Curriculum Vitae</h3>
-        <p>Full academic CV — education, publications, awards, and research experience.</p>
-        <p style="margin-top:5px; font-size:12px; color:var(--muted);">PDF format · Last updated 2025</p>
+    <!-- Research Experience -->
+    <p class="section-label" style="margin-bottom:20px;">Research Experience</p>
+    <div class="edu-list" style="margin-bottom:48px;">
+      <div class="edu-item">
+        <div class="edu-year">2022 –<br>Present</div>
+        <div>
+          <div class="edu-degree">Graduate Researcher</div>
+          <div class="edu-school">NECO Lab, Korea University<br>
+            <span style="font-size:13px; color:var(--muted); line-height:1.7;">
+              PbS CQD synthesis optimization · SWIR photodetector &amp; APD fabrication · Surface passivation &amp; ligand engineering · Bayesian ML for process optimization
+            </span>
+          </div>
+        </div>
       </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <a href="cv.pdf" class="btn btn-primary" download>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download CV
-        </a>
-        <a href="cv.pdf" class="btn btn-ghost" target="_blank">View PDF</a>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Awards -->
+    <p class="section-label" style="margin-bottom:20px;">Awards &amp; Honors</p>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-year" style="color:var(--muted); font-style:italic;">—</div>
+        <div style="color:var(--muted); font-style:italic; font-size:14px;">Update soon</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footer">© 2025 Dongeon Kim · Korea University · NECO Lab</div>
+</div>
+
+<!-- ══ PAGE: CV ══ -->
+<div class="page" id="page-cv">
+  <div class="container">
+    <p class="section-label">About</p>
+    <h1 class="page-title">Curriculum <em>Vitae</em></h1>
+    <div style="display:flex; align-items:center; justify-content:center; min-height:300px;">
+      <div style="text-align:center; color:var(--muted);">
+        <div style="font-size:48px; margin-bottom:16px;">📄</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--text); margin-bottom:8px;">Update Soon</div>
+        <div style="font-size:14px;">CV will be available shortly.</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">© 2025 Dongeon Kim · Korea University · NECO Lab</div>
+</div>
+
+<!-- ══ PAGE: SKILLS ══ -->
+<div class="page" id="page-skills">
+  <div class="container">
+    <p class="section-label">About</p>
+    <h1 class="page-title">Research <em>Skills</em></h1>
+    <div style="display:flex; align-items:center; justify-content:center; min-height:300px;">
+      <div style="text-align:center; color:var(--muted);">
+        <div style="font-size:48px; margin-bottom:16px;">🔬</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:22px; color:var(--text); margin-bottom:8px;">Update Soon</div>
+        <div style="font-size:14px;">Research skills &amp; tools will be listed here.</div>
       </div>
     </div>
   </div>
@@ -468,25 +553,16 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
 <!-- ══ PAGE: PUBLICATIONS ══ -->
 <div class="page" id="page-publications">
   <div class="container">
-    <p class="section-label">Research Output</p>
+    <p class="section-label">Research</p>
     <h1 class="page-title"><em>Publications</em></h1>
-
-    <div class="pub-tabs">
-      <button class="pub-tab active" onclick="showTab('papers', this)">Journal Papers <span style="color:var(--muted);font-weight:400;">(17)</span></button>
-      <button class="pub-tab" onclick="showTab('patents', this)">Patents</button>
-      <button class="pub-tab" onclick="showTab('conferences', this)">Conferences</button>
+    <div class="pub-filters">
+      <button class="filter-btn active" data-filter="all" onclick="filterPubs(this)">All</button>
+      <button class="filter-btn" data-filter="first" onclick="filterPubs(this)">First Author</button>
+      <button class="filter-btn" data-filter="photodetector" onclick="filterPubs(this)">Photodetector</button>
+      <button class="filter-btn" data-filter="photovoltaic" onclick="filterPubs(this)">Photovoltaic</button>
+      <button class="filter-btn" data-filter="review" onclick="filterPubs(this)">Review</button>
     </div>
-
-    <!-- PAPERS -->
-    <div class="tab-panel active" id="tab-papers">
-      <div class="pub-filters">
-        <button class="filter-btn active" data-filter="all" onclick="filterPubs(this)">All</button>
-        <button class="filter-btn" data-filter="first" onclick="filterPubs(this)">First Author</button>
-        <button class="filter-btn" data-filter="photodetector" onclick="filterPubs(this)">Photodetector</button>
-        <button class="filter-btn" data-filter="photovoltaic" onclick="filterPubs(this)">Photovoltaic</button>
-        <button class="filter-btn" data-filter="review" onclick="filterPubs(this)">Review</button>
-      </div>
-      <div class="pub-list" id="pub-list">
+    <div class="pub-list" id="pub-list">
 
         <div class="pub-item" data-tags="photodetector">
           <div><div class="pub-year">2026</div></div>
@@ -649,28 +725,33 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
         </div>
 
       </div>
-    </div><!-- /tab-papers -->
+  </div>
+  <div class="footer">© 2025 Dongeon Kim · Korea University · NECO Lab</div>
+</div>
 
-    <!-- PATENTS -->
-    <div class="tab-panel" id="tab-patents">
+<!-- ══ PAGE: PATENTS & TALKS ══ -->
+<div class="page" id="page-patents">
+  <div class="container">
+    <p class="section-label">Research</p>
+    <h1 class="page-title">Patents <em>&amp; Talks</em></h1>
+
+    <p class="section-label" style="margin-bottom:16px;">Patents</p>
+    <div class="edu-list" style="margin-bottom:48px;">
       <div class="patent-item">
         <div class="patent-title">할라이드산 리간드 기반 표면 패시베이션을 통한 싸이오유레아 유도 양자점 잉크 제조 방법 및 이를 이용한 소자</div>
         <div class="patent-meta"><span class="patent-badge">출원</span>Korea · SW Baek, D Kim et al. · 2024</div>
       </div>
-      <div class="patent-item">
-        <div class="patent-title" style="color:var(--muted); font-style:italic; font-weight:400;">추가 특허 정보를 입력하세요</div>
-        <div class="patent-meta"></div>
-      </div>
     </div>
 
-    <!-- CONFERENCES -->
-    <div class="tab-panel" id="tab-conferences">
-      <div class="conf-item">
-        <div class="patent-title" style="color:var(--muted); font-style:italic; font-weight:400;">학회 발표 정보를 입력하세요</div>
-        <div class="patent-meta"></div>
+    <hr class="divider">
+
+    <p class="section-label" style="margin-bottom:16px;">Conference Talks &amp; Posters</p>
+    <div class="edu-list">
+      <div class="edu-item">
+        <div class="edu-year" style="color:var(--muted); font-style:italic;">—</div>
+        <div style="color:var(--muted); font-style:italic; font-size:14px;">Update soon</div>
       </div>
     </div>
-
   </div>
   <div class="footer">© 2025 Dongeon Kim · Korea University · NECO Lab</div>
 </div>
@@ -754,7 +835,15 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
+  // highlight parent nav button
+  const map = {
+    home: 'nav-home',
+    profile: 'nav-about', cv: 'nav-about', skills: 'nav-about',
+    publications: 'nav-research', patents: 'nav-research',
+    contact: 'nav-contact'
+  };
+  const navId = map[name];
+  if (navId) document.getElementById(navId).classList.add('active');
   window.scrollTo(0, 0);
 }
 
