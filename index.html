@@ -6,6 +6,7 @@
 <title>Dong-eon Kim</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,46 +95,70 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
 /* ══════════════════════════════
    PAGE 1 — HOME
 ══════════════════════════════ */
+#page-home {
+  height: calc(100vh - var(--nav-h));
+  overflow: hidden;
+  position: relative;
+}
+.home-bg {
+  position: absolute; inset: 0;
+  background: url('bg.png') center center / cover no-repeat;
+  filter: blur(6px) brightness(0.45);
+  transform: scale(1.05);
+  z-index: 0;
+}
 .home-hero {
-  min-height: calc(100vh - var(--nav-h));
+  position: relative; z-index: 1;
+  height: 100%;
   display: flex; align-items: center;
-  padding: 0 6%;
+  padding: 0 8%;
 }
 .home-inner {
-  max-width: 860px; margin: 0 auto; width: 100%;
-  display: grid; grid-template-columns: 1fr 180px;
-  gap: 48px; align-items: center;
+  max-width: 900px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 56px; align-items: center;
+}
+.home-label {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.7);
+  margin-bottom: 14px;
 }
 .home-hero h1 {
-  font-family: 'DM Serif Display', serif;
-  font-size: clamp(48px, 8vw, 76px);
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 900;
+  font-size: clamp(52px, 9vw, 88px);
   line-height: 1.0; letter-spacing: -0.03em;
-  margin-bottom: 20px;
-}
-.home-hero h1 em { font-style: italic; color: var(--accent); }
-.home-bio {
-  color: var(--muted); font-size: 15px; line-height: 1.8;
-  max-width: 520px; margin-bottom: 32px;
+  color: #ffffff;
+  margin-bottom: 28px;
 }
 .home-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-.avatar {
-  width: 160px; height: 160px; border-radius: 10px;
-  background: var(--accent-light); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'DM Serif Display', serif; font-size: 52px;
-  color: var(--accent); flex-shrink: 0;
+.btn-white {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  backdrop-filter: blur(4px);
 }
+.btn-white:hover { background: rgba(255,255,255,0.28); }
+.btn-white-solid {
+  background: #fff; color: var(--accent);
+}
+.btn-white-solid:hover { background: rgba(255,255,255,0.88); }
 .home-stats {
-  display: flex; gap: 32px; margin-top: 48px;
-  padding-top: 32px; border-top: 1px solid var(--border);
+  display: flex; gap: 32px; margin-top: 40px;
+  padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.2);
   flex-wrap: wrap;
 }
-.stat-item { }
 .stat-num {
-  font-family: 'DM Serif Display', serif;
-  font-size: 32px; color: var(--accent); line-height: 1;
+  font-family: 'Pretendard', sans-serif; font-weight: 700;
+  font-size: 30px; color: #fff; line-height: 1;
 }
-.stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.stat-label { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px; }
+.avatar {
+  width: 170px; height: 210px; border-radius: 12px;
+  overflow: hidden; border: 2px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 
 /* ══════════════════════════════
    PAGE 2 — ABOUT
@@ -325,18 +350,16 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
 
 <!-- ══ PAGE: HOME ══ -->
 <div class="page active" id="page-home">
+  <div class="home-bg"></div>
   <div class="home-hero">
     <div class="home-inner">
       <div>
-        <p class="section-label">PhD Candidate · Korea University</p>
-        <h1>Dong-eon<br><em>Kim</em></h1>
-        <p class="home-bio">
-          Colloidal quantum dot (CQD) optoelectronics researcher specializing in PbS QD synthesis, surface passivation, and SWIR device fabrication. Member of <a href="https://neco.korea.ac.kr" style="color:var(--accent);" target="_blank">NECO Lab</a>, Dept. of Chemical &amp; Biomolecular Engineering.
-        </p>
+        <p class="home-label">PhD Candidate · Korea University</p>
+        <h1>Dongeon<br>Kim</h1>
         <div class="home-buttons">
-          <button class="btn btn-primary" onclick="showPage('publications')">Publications</button>
-          <button class="btn btn-ghost" onclick="showPage('about')">About Me</button>
-          <button class="btn btn-ghost" onclick="showPage('contact')">Contact</button>
+          <button class="btn btn-white-solid" onclick="showPage('publications')">Publications</button>
+          <button class="btn btn-white" onclick="showPage('about')">About Me</button>
+          <button class="btn btn-white" onclick="showPage('contact')">Contact</button>
         </div>
         <div class="home-stats">
           <div class="stat-item">
@@ -357,10 +380,12 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
           </div>
         </div>
       </div>
-      <div class="avatar">DK</div>
+      <div class="avatar">
+        <img src="profile.jpg" alt="Dong-eon Kim">
+      </div>
     </div>
   </div>
-  <div class="footer">© 2025 Dong-eon Kim · Korea University · NECO Lab</div>
+  <div class="footer" style="position:absolute; bottom:0; left:0; right:0; color:rgba(255,255,255,0.4); border-top:1px solid rgba(255,255,255,0.1);">© 2025 Dong-eon Kim · Korea University · NECO Lab</div>
 </div>
 
 <!-- ══ PAGE: ABOUT ══ -->
