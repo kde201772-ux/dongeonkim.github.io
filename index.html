@@ -63,7 +63,7 @@ nav {
 .nav-dropdown { position: relative; }
 .nav-drop-btn { display: flex; align-items: center; gap: 4px; }
 .drop-arrow { font-size: 10px; opacity: 0.6; transition: transform 0.2s; }
-.nav-dropdown:hover .drop-arrow { transform: rotate(180deg); }
+.nav-dropdown.open .drop-arrow { transform: rotate(180deg); }
 .dropdown-menu {
   display: none;
   position: absolute; top: calc(100% + 8px); left: 50%;
@@ -77,7 +77,7 @@ nav {
   padding: 6px;
   z-index: 300;
 }
-.nav-dropdown:hover .dropdown-menu { display: block; }
+.nav-dropdown.open .dropdown-menu { display: block; }
 .dropdown-menu li button {
   width: 100%; text-align: left;
   padding: 8px 12px; border-radius: 5px;
@@ -763,16 +763,16 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
     <h1 class="page-title"><em>Contact</em></h1>
 
     <div class="contact-grid">
-      <a href="mailto:dongeon@korea.ac.kr" class="contact-card">
+      <a href="mailto:kdu918@korea.ac.kr" class="contact-card">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </div>
         <div>
           <div class="contact-label">Email</div>
-          <div class="contact-value">dongeon@korea.ac.kr</div>
+          <div class="contact-value">kdu918@korea.ac.kr</div>
         </div>
       </a>
-      <a href="https://scholar.google.com" target="_blank" class="contact-card">
+      <a href="https://scholar.google.com/citations?user=Xv4OeUAAAAAJ&hl=ko" target="_blank" class="contact-card">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         </div>
@@ -781,16 +781,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
           <div class="contact-value">Dongeon Kim</div>
         </div>
       </a>
-      <a href="https://github.com/dongeon-kim" target="_blank" class="contact-card">
-        <div class="contact-icon">
-          <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        </div>
-        <div>
-          <div class="contact-label">GitHub</div>
-          <div class="contact-value">dongeon-kim</div>
-        </div>
-      </a>
-      <a href="https://neco.korea.ac.kr" target="_blank" class="contact-card">
+      <a href="https://opel.imweb.me/" target="_blank" class="contact-card">
         <div class="contact-icon">
           <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
@@ -801,19 +792,19 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
       </a>
     </div>
 
-    <div class="affil-block">
+    <div class="affil-block" style="margin-top:24px;">
       <h3>Affiliation</h3>
       <div class="affil-row">
         <div class="affil-dot"></div>
         <div class="affil-text">
-          NECO Lab (Nanomaterials for Energy Conversion and Optoelectronics)
-          <span>Prof. Baek Se-woong · Korea University</span>
+          Nanomaterials Energy Conversion Optoelectronics Lab (NECO)
+          <span>Advisor: Prof. Se-Woong Baek · Korea University</span>
         </div>
       </div>
       <div class="affil-row">
         <div class="affil-dot"></div>
         <div class="affil-text">
-          Dept. of Chemical &amp; Biomolecular Engineering
+          Department of Chemical &amp; Biological Engineering
           <span>Korea University, Seoul, Republic of Korea</span>
         </div>
       </div>
@@ -834,8 +825,9 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  // close all dropdowns
+  document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
   document.getElementById('page-' + name).classList.add('active');
-  // highlight parent nav button
   const map = {
     home: 'nav-home',
     profile: 'nav-about', cv: 'nav-about', skills: 'nav-about',
@@ -846,6 +838,26 @@ function showPage(name) {
   if (navId) document.getElementById(navId).classList.add('active');
   window.scrollTo(0, 0);
 }
+
+// click-toggle dropdowns
+document.querySelectorAll('.nav-drop-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const dropdown = btn.closest('.nav-dropdown');
+    const isOpen = dropdown.classList.contains('open');
+    // close all first
+    document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+    if (!isOpen) dropdown.classList.add('open');
+  });
+});
+// click outside closes
+document.addEventListener('click', () => {
+  document.querySelectorAll('.nav-dropdown').forEach(d => d.classList.remove('open'));
+});
+// prevent dropdown menu click from closing
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+  menu.addEventListener('click', (e) => e.stopPropagation());
+});
 
 function showTab(name, btn) {
   document.querySelectorAll('.pub-tab').forEach(t => t.classList.remove('active'));
